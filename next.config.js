@@ -7,7 +7,7 @@ module.exports = {
 	redirects: () => [
 		{
 			source: "/",
-			destination: "https://github.com/DaanGamesDG/PaperPlane/",
+			destination: "https://gnoahg.github.io/cdn/",
 			permanent: true
 		}
 	]
