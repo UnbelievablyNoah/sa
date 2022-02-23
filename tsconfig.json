@@ -1,5 +1,5 @@
 {
-	"extends": "@sapphire/ts-config",
+	//"extends": "@sapphire/ts-config",
 	"compilerOptions": {
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
