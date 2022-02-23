@@ -8,8 +8,8 @@
 }
 
 .file-upload {
-	background-color: $bg2;
-	border: 1px solid $border;
+	background-color: var(--bg2);
+	border: 1px solid var(--bg2-border);
 	width: 90%;
 	min-height: 50vh;
 	margin-bottom: 1rem;
@@ -21,14 +21,18 @@
 }
 
 .file-uploader-container {
-	background-color: $bg2;
-	border: 2px dashed $border;
+	background-color: var(--bg2);
+	border: 2px dashed var(--bg2-border);
 	border-radius: 5px;
 	width: 100%;
-	height: 20vh;
+	min-height: 20vh;
 
 	display: grid;
 	place-items: center;
+
+	> h1 {
+		text-align: center;
+	}
 }
 
 .file-upload-files {
@@ -48,12 +52,12 @@
 
 		i {
 			margin-right: 15px;
-			color: rgba($white, 0.6);
+			color: rgba(var(--white-rgb), 0.6);
 			cursor: pointer;
 			transition: all 0.5s ease;
 
 			&:hover {
-				color: rgba($white, 0.9);
+				color: rgba(var(--white-rgb), 0.9);
 			}
 		}
 
@@ -67,27 +71,75 @@
 
 .file-upload-button {
 	font-size: 1.5rem;
-	border: 1px solid $blurple;
-	color: $blurple;
+	border: 1px solid var(--blurple);
+	color: var(--blurple);
 	padding: 10px;
 	border-radius: 5px;
 	transition: all 0.5s ease;
 	cursor: pointer;
 
 	&:hover {
-		background-color: $blurple;
-		color: $white;
+		background-color: var(--blurple);
+		color: var(--white);
 	}
 }
 
 .link-upload {
-	background-color: $bg2;
-	border: 1px solid $border;
+	background-color: var(--bg2);
+	border: 1px solid var(--bg2-border);
 	width: 90%;
 	margin-bottom: 60px;
 	border-radius: 5px;
+	min-height: 250px;
 
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: space-between;
+}
+
+.file-progress-bar {
+	width: 200px;
+	height: 10px;
+
+	margin-top: 0.5rem;
+	border-radius: 5px;
+
+	background-color: var(--black);
+
+	display: flex;
+	align-items: center;
+}
+
+.file-uploader-items {
+	display: flex;
+	flex-wrap: wrap;
+
+	width: 100%;
+	padding: 1rem;
+}
+
+.file-progress {
+	background: linear-gradient(90deg, hsl(221, 70%, 55.5%), hsl(269, 83.8%, 71%));
+	height: 10px;
+	border-radius: 5px;
+	max-width: 200px;
+}
+
+.file-upload-item {
+	max-width: 200px;
+	margin-right: 10px;
+	margin-top: 10px;
+
+	> p {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.link-upload .edit-container {
+		width: 100%;
+	}
 }

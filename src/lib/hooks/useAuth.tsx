@@ -1,11 +1,10 @@
+import type { User } from "@prisma/client";
 import React, { useState, useContext, createContext, useEffect } from "react";
-import { fetch } from "../fetch";
-import { User } from "../types";
+import { fetch, getCancelToken } from "../fetch";
 
 interface UseAuth {
 	user: User | null;
 	loading: boolean;
-	// eslint-disable-next-line no-unused-vars
 	fetch: (removeOnError?: boolean) => void;
 }
 
@@ -25,16 +24,24 @@ const useProvideAuth = (): UseAuth => {
 	const [loading, setLoading] = useState<true | false>(true);
 
 	useEffect(() => {
-		fetch("/user/", { method: "get", withCredentials: true })
+		const { cancel, token } = getCancelToken();
+		fetch<User>("/api/user", token)
 			.then((res) => {
 				setUser(res.data);
 				setLoading(false);
 			})
 			.catch(() => setLoading(false));
+
+		return () => cancel();
 	}, []);
 
+	useEffect(() => {
+		const html = document.getElementById("html") as HTMLHtmlElement;
+		html.className = user?.theme ?? "dark";
+	}, [user]);
+
 	const reFetch = (removeOnError = false) =>
-		fetch("/user/", { method: "get", withCredentials: true })
+		fetch<User>("/api/user")
 			.then((res) => {
 				setUser(res.data);
 				setLoading(false);
@@ -47,6 +54,6 @@ const useProvideAuth = (): UseAuth => {
 	return {
 		user,
 		loading,
-		fetch: reFetch,
+		fetch: reFetch
 	};
 };

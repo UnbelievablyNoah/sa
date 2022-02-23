@@ -1,31 +1,19 @@
-export interface User {
-	username: string;
-	userId: string;
-	password: string;
-	token: string;
-	theme: string;
-}
-
-export interface Session {
-	token: string;
-	userId: string;
-	user: User;
-}
-
+/* == General == */
 export interface ApiError {
 	message: string;
 	error: string;
 }
 
+/* == Stats == */
 export interface Stats {
 	files: {
-		bytes: string;
 		size: number;
+		bytes: string;
 	};
 	links: number;
-	users: number;
 }
 
+/* == File == */
 export interface FileStats {
 	name: string;
 	size: string;
@@ -33,8 +21,23 @@ export interface FileStats {
 	type: string;
 }
 
+export interface File {
+	name: string;
+	size: string;
+	_size: number;
+	date: number;
+	type: string;
+}
+
+/* == Link == */
 export interface LinkStats {
-	path: string;
+	id: string;
 	url: string;
 	date: string;
+}
+
+/* == Login == */
+export interface LoginCreds {
+	username: string;
+	password: string;
 }

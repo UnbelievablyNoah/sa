@@ -1,31 +1,35 @@
-import { NextPage } from "next";
-import Head from "next/head";
+import type { NextPage } from "next";
 import React from "react";
-import Loading from "../components/loading";
-import Unauthorized from "../components/pages/errors/401";
-import ConfigDownloads from "../components/pages/settings/configDownloads";
-import UserSettings from "../components/pages/settings/userSettings";
+import Head from "next/head";
+import PulseLoader from "../components/general/PulseLoader";
 import { useAuth } from "../lib/hooks/useAuth";
+import Unauthorized from "../components/general/Unauthorized";
+import ConfigDownloads from "../components/settings/ConfigDownloads";
+import UserSettings from "../components/settings/UserSettings";
+import EmbedSettings from "../components/settings/EmbedSettings";
 
 const Settings: NextPage = () => {
-	const { loading, user } = useAuth();
+	const { user, loading } = useAuth();
 
 	return (
-		<>
+		<main>
 			<Head>
 				<title>PaperPlane - Settings</title>
 			</Head>
 			{loading ? (
-				<Loading />
+				<div className="center-items">
+					<PulseLoader size={30} />
+				</div>
 			) : user ? (
-				<main className="settings">
+				<div className="settings">
 					<UserSettings />
 					<ConfigDownloads />
-				</main>
+					<EmbedSettings />
+				</div>
 			) : (
 				<Unauthorized />
 			)}
-		</>
+		</main>
 	);
 };
 

@@ -1,77 +1,54 @@
-import axios, { CancelToken } from "axios";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-import Loading from "../components/loading";
-import { fetch } from "../lib/fetch";
-import { useAuth } from "../lib/hooks/useAuth";
-import { Stats } from "../lib/types";
-import DashboardFiles from "../components/pages/dashboard/files";
-import DashboardLinks from "../components/pages/dashboard/links";
+import React, { useEffect, useState } from "react";
+import { fetch, getCancelToken, Stats } from "../lib";
+import type { CancelToken } from "axios";
 import Head from "next/head";
-import Unauthorized from "../components/pages/errors/401";
+import Statistics from "../components/dashboard/Statistics";
+import FileTable from "../components/dashboard/FileTable";
+import LinkTable from "../components/dashboard/LinkTable";
+import PulseLoader from "../components/general/PulseLoader";
+import { useAuth } from "../lib/hooks/useAuth";
+import Unauthorized from "../components/general/Unauthorized";
 
 const Dashboard: NextPage = () => {
-	const { loading, user } = useAuth();
+	const { user, loading } = useAuth();
 	const [stats, setStats] = useState<Stats>({
 		files: { bytes: "0.0 B", size: 0 },
-		links: 0,
-		users: 1,
+		links: 0
 	});
 
 	const fetchStats = (token?: CancelToken) => {
-		fetch("/stats/", {
-			withCredentials: true,
-			cancelToken: token,
-		})
+		fetch<Stats>("/api/stats", token)
 			.then((res) => setStats(res.data))
 			.catch(() => void 0);
 	};
 
 	useEffect(() => {
-		const { token, cancel } = axios.CancelToken.source();
+		const { token, cancel } = getCancelToken();
 		fetchStats(token);
 
 		return () => cancel("Cancelled");
 	}, []);
 
 	return (
-		<>
+		<main>
 			<Head>
 				<title>PaperPlane - Dashboard</title>
 			</Head>
 			{loading ? (
-				<Loading />
+				<div className="center-items">
+					<PulseLoader size={30} />
+				</div>
 			) : user ? (
-				<main className="dashboard">
-					<h1 className="dashboard-title">Welcome back {user?.username}</h1>
-					<div className="dashboard-stats">
-						<h1 className="dashboard__stats-title">Stats</h1>
-						<div className="dashboard__stats-items">
-							<div className="dashboard__stats-item">
-								<h2>Files</h2>
-								<p>{stats.files.size}</p>
-							</div>
-							<div className="dashboard__stats-item">
-								<h2>Links</h2>
-								<p>{stats.links}</p>
-							</div>
-							<div className="dashboard__stats-item">
-								<h2>Total Size</h2>
-								<p>{stats.files.bytes}</p>
-							</div>
-							<div className="dashboard__stats-item">
-								<h2>Users</h2>
-								<p>{stats.users}</p>
-							</div>
-						</div>
-					</div>
-					<DashboardFiles user={user} fetchStats={fetchStats} />
-					<DashboardLinks user={user} fetchStats={fetchStats} />
-				</main>
+				<>
+					<Statistics stats={stats} />
+					<FileTable fetchStats={fetchStats} />
+					<LinkTable fetchStats={fetchStats} />
+				</>
 			) : (
 				<Unauthorized />
 			)}
-		</>
+		</main>
 	);
 };
 

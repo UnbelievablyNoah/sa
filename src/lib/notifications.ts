@@ -11,8 +11,8 @@ export const alert = (title: string, message: string, id?: string) => {
 			duration: 5e3,
 			showIcon: true,
 			pauseOnHover: true,
-			onScreen: true,
-		},
+			onScreen: true
+		}
 	});
 };
 
@@ -27,8 +27,8 @@ export const success = (title: string, message: string, id?: string) => {
 			duration: 5e3,
 			showIcon: true,
 			pauseOnHover: true,
-			onScreen: true,
-		},
+			onScreen: true
+		}
 	});
 };
 
@@ -43,7 +43,7 @@ export const info = (title: string, message: string, id?: string) => {
 			duration: 5e3,
 			showIcon: true,
 			pauseOnHover: true,
-			onScreen: true,
-		},
+			onScreen: true
+		}
 	});
 };

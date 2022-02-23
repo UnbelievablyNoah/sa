@@ -1,15 +1,14 @@
-node_modules
-prisma/migrations
-.env
-yarn.lock
-data
-
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
+
+# Yarn files
+.yarn/cache
+.yarn/install-state.gz
+.yarn/build-state.yml
 
 # testing
 /coverage
@@ -20,7 +19,6 @@ data
 
 # production
 /build
-/dist
 
 # misc
 .DS_Store
@@ -32,6 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -40,3 +39,8 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Private Data
+/data
+
+# Prisma
+prisma/migrations

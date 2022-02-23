@@ -1,12 +1,18 @@
-import axios, { AxiosRequestConfig, AxiosPromise } from "axios";
+import type { AxiosPromise, AxiosRequestConfig, CancelToken } from "axios";
+import axios from "axios";
 
-export const fetch = <v = any>(path: string, options: AxiosRequestConfig) => {
+export function getCancelToken() {
+	return axios.CancelToken.source();
+}
+
+export function fetch<V = unknown>(path: string, cancelToken?: CancelToken, options: AxiosRequestConfig = {}): AxiosPromise<V> {
 	options.url = `${process.env.NEXT_PUBLIC_DOMAIN}${path}`;
-	options.withCredentials ??= true;
+	options.cancelToken ??= cancelToken;
+
 	options.headers ??= {};
+	options.headers["Authorization"] ??= `Bearer ${localStorage.getItem("PAPERPLANE_AUTH")}`;
 
-	if (options.method !== "get" && options.method !== "GET")
-		options.headers["Content-Type"] = options.headers["Content-Type"] ?? "application/json";
+	if (options.method !== "get" && options.method !== "GET") options.headers["Content-Type"] ??= "application/json";
 
-	return axios(options) as AxiosPromise<v>;
-};
+	return axios(options) as AxiosPromise<V>;
+}

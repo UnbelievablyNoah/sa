@@ -1,26 +1,4 @@
-export const sortTypes = [
-	{
-		label: "Date: New - Old",
-		value: "date-new",
-	},
-	{
-		label: "Date: Old - New",
-		value: "date-old",
-	},
-	{
-		label: "Name: A - Z",
-		value: "name",
-	},
-	{
-		label: "Name: Z - A",
-		value: "name-reverse",
-	},
-	{
-		label: "Size: High - Small",
-		value: "bytes-small",
-	},
-	{
-		label: "Size: Small - High",
-		value: "bytes-large",
-	},
-];
+import { join } from "path";
+
+export const DATA_DIR = join(process.cwd(), "data");
+export const FILE_DATA_DIR = join(DATA_DIR, "files");
