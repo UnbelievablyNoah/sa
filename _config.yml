@@ -1,6 +1,6 @@
 lsi: false
 safe: true
-source: /Users/noah/sa/index.js
+source: /Users/noah/sa/server/index.js
 incremental: false
 highlighter: rouge
 gist:
