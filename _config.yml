@@ -1,6 +1,6 @@
 lsi: false
 safe: true
-source: server/index.js
+source: index.js
 incremental: false
 highlighter: rouge
 gist:
